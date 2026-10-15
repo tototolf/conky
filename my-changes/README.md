@@ -35,9 +35,23 @@
 | Стало | `own_window_color = '#808080',` |
 | Коммит | `107b4197` — `feat(config): default window background gray instead of black` |
 
-Тот же серый применён и к конфигу на ноутбуке: строка **32** в
-`~/.config/conky/conky.conf` (копия — в `files/local-conky.conf`). Там используется
-британское имя `own_window_colour` — почему, написано ниже.
+### 2. Фон виджета на ноутбуке: серый → прежний (откат)
+
+Тот же цвет был применён к рабочему конфигу на ноутбуке, а затем **возвращён к
+прежнему** по просьбе владельца — серый не подошёл.
+
+| | |
+|---|---|
+| Файл | `~/.config/conky/conky.conf`, строка **32** (копия — `files/local-conky.conf`) |
+| Было | `own_window_colour = '1D2129',` |
+| Стало 2026-10-15 15:32:36 | `own_window_colour = '808080',` |
+| **Текущее состояние** (откат 15:40:06) | `own_window_colour = '1D2129',` — прежний фон |
+| Коммит | нет: файл лежит вне репозитория |
+| Дифф отката | `diffs/0002-local-config-revert-background.diff` |
+
+Итог: **в проекте** (`data/conky.conf`) фон остался серым, **на ноутбуке** — прежний.
+Копия `files/local-conky.conf` всегда отражает текущее состояние файла на машине.
+Там используется британское имя `own_window_colour` — почему, написано ниже.
 
 ## Как проверить изменения
 
@@ -57,6 +71,9 @@ git apply my-changes/diffs/0001-default-background-black-to-gray.patch
 
 # 5. Что печатает собранный conky
 conky -C | grep own_window_color
+
+# 6. Дифф отката локального конфига (читаемый, не git-патч)
+cat my-changes/diffs/0002-local-config-revert-background.diff
 ```
 
 ## Детали, чтобы не запутаться потом

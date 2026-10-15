@@ -1,7 +1,7 @@
 {
   "journal": "my-changes",
-  "schema_version": 1,
-  "generated_at": "2026-10-15T15:34:02+03:00",
+  "schema_version": 2,
+  "generated_at": "2026-10-15T15:45:31+03:00",
   "author": "tototolf",
   "fork": {
     "repo": "https://github.com/tototolf/conky",
@@ -12,29 +12,44 @@
     "fork_point_commit": "319260b7203a61bdbdbaf528f768cdcaa286da27",
     "fork_point_subject": "feat(ci): publish ARM AppImages (#2497)"
   },
+  "notes": [
+    "Патчи лежат в my-changes/diffs/, а не в patches/: .gitignore проекта игнорирует любой каталог patches/ (строка 5 .gitignore).",
+    "my-changes/files/local-conky.conf всегда отражает ТЕКУЩЕЕ состояние конфига на ноутбуке; исторические состояния описаны в записях changes[].",
+    "Для локального файла дифф 0002 — читаемый unified diff, а не git-патч: файл лежит вне репозитория."
+  ],
   "changes": [
     {
       "id": 1,
+      "scope": "repo",
       "date": "2026-10-15T15:31:43+03:00",
-      "title": "Фон окна: чёрный → серый",
+      "title": "Фон окна по умолчанию: чёрный → серый",
       "summary": "Цвет фона окна изменён с чёрного (#000000 — умолчание, зашитое в код) на серый (#808080).",
       "commit": "107b41973b1d372ce4f248e753113b439dcd6870",
       "commit_short": "107b4197",
       "commit_subject": "feat(config): default window background gray instead of black",
       "patch": "my-changes/diffs/0001-default-background-black-to-gray.patch",
-      "reason": "По просьбе владельца форка: тёмный фон окна заменён серым.",
-      "verified_with": "conky 1.24.2, рендер в консоль (out_to_console=true, out_to_x=false, -i 3): CPU 49C, кулер 0 RPM, NVMe 33C, Wi-Fi MGTS_GPON5_5030 79%, батарея D 54%, ОЗУ 2.58G/15.3G, диск / 11.0G/184G",
+      "reason": "По просьбе владельца форка: тёмный фон заменён серым.",
       "repo_files": [
         {
           "path": "data/conky.conf",
           "line_after": 45,
-          "line_before": null,
           "before": "(настройки не было → фон по умолчанию чёрный)",
           "after": "own_window_color = '#808080',",
           "sha256_after": "2a47fe136b991849a29ee95b1dc5ec122829ec00f419a623af5526c8d6fcf578",
-          "copy": "my-changes/files/data-conky.conf"
+          "copy": "my-changes/files/data-conky.conf",
+          "still_in_effect": true
         }
-      ],
+      ]
+    },
+    {
+      "id": 2,
+      "scope": "system",
+      "date": "2026-10-15T15:32:36+03:00",
+      "title": "Фон виджета на ноутбуке: чёрный → серый",
+      "summary": "Рабочий конфиг на машине получил тот же серый фон, что и конфиг по умолчанию в проекте.",
+      "commit": null,
+      "reason": "Продолжение просьбы: серый фон должен был примениться и к рабочему виджету.",
+      "superseded_by": 3,
       "local_files": [
         {
           "path": "~/.config/conky/conky.conf",
@@ -43,25 +58,55 @@
           "after": "own_window_colour = '808080',",
           "note": "Установленный conky 1.24.2 не знает имени own_window_color, поэтому здесь британский алиас own_window_colour.",
           "sha256_after": "493d91bec50dc25366a9f8a3d25f0b7236894e2b68bcbb70825e8bc16147c234",
-          "backup": "~/.config/conky/conky.conf.bak-20261015-153236",
-          "copy": "my-changes/files/local-conky.conf"
+          "backup_before_change": "~/.config/conky/conky.conf.bak-20261015-153236"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "scope": "system",
+      "date": "2026-10-15T15:40:06+03:00",
+      "title": "Фон на ноутбуке: откат к прежнему",
+      "summary": "Фон рабочего виджета возвращён к исходному (#1D2129). Фон в проекте оставлен серым — решение владельца.",
+      "commit": null,
+      "reason": "Серый фон не подошёл владельцу; прежний вид возвращён.",
+      "verified": "Файл побайтово совпал с резервной копией, снятой до изменения (diff без различий, sha256 c14a8e2f... с обеих сторон, 94 строки, вхождений 808080 — 0).",
+      "diff": "my-changes/diffs/0002-local-config-revert-background.diff",
+      "local_files": [
+        {
+          "path": "~/.config/conky/conky.conf",
+          "line": 32,
+          "before": "own_window_colour = '808080',",
+          "after": "own_window_colour = '1D2129',",
+          "sha256_after": "c14a8e2fb24579cdf6759d02f26083076e95ee5c6533a6ff6b5ea849927c3f3c",
+          "copy": "my-changes/files/local-conky.conf",
+          "restored_from": "~/.config/conky/conky.conf.bak-20261015-153236",
+          "still_in_effect": true
         }
       ],
       "not_changed": [
-        "src/** (умолчание, зашитое в код)",
-        "структура и переменные конфигов",
-        "лицензии и версии"
+        "data/conky.conf (фон в проекте остался серым, коммит 107b4197)"
       ]
     }
   ],
+  "current_state": {
+    "project_default_background": {
+      "file": "data/conky.conf",
+      "line": 45,
+      "value": "own_window_color = '#808080'"
+    },
+    "machine_background": {
+      "file": "~/.config/conky/conky.conf",
+      "line": 32,
+      "value": "own_window_colour = '1D2129'"
+    },
+    "note": "Проект и машина сейчас расходятся намеренно: в проекте серый, на ноутбуке — прежний фон."
+  },
   "how_to_verify": [
     "git show 107b4197",
     "git log --oneline upstream/main..main",
     "git apply my-changes/diffs/0001-default-background-black-to-gray.patch",
+    "cat my-changes/diffs/0002-local-config-revert-background.diff",
     "conky -C | grep own_window_color"
-  ],
-  "notes": [
-    "Патчи лежат в my-changes/diffs/, а не в patches/: .gitignore проекта игнорирует любой каталог patches/ (строка 5 .gitignore).",
-    "Копии изменённых файлов в my-changes/files/ нужны, чтобы видеть итоговое содержимое без git-операций."
   ]
 }

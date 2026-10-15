@@ -1,0 +1,11 @@
+--- /home/norikly/.config/conky/conky.conf:32  (808080 — серый, до отката)
++++ /home/norikly/.config/conky/conky.conf:32  (1D2129 — прежний, текущий)
+@@ -29,7 +29,7 @@
+     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+     own_window_argb_visual = true,   -- полупрозрачный фон (нужен композитор)
+     own_window_argb_value = 150,
+-    own_window_colour = '808080',
++    own_window_colour = '1D2129',
+ 
+     draw_borders = false,
+     draw_graph_borders = true,
