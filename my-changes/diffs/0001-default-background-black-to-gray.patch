@@ -1,0 +1,30 @@
+From 107b41973b1d372ce4f248e753113b439dcd6870 Mon Sep 17 00:00:00 2001
+From: tototolf <63393139+tototolf@users.noreply.github.com>
+Date: Thu, 15 Oct 2026 15:31:43 +0300
+Subject: [PATCH] feat(config): default window background gray instead of black
+
+data/conky.conf is compiled into the binary as the built-in default
+config (BUILD_BUILTIN_CONFIG via bin/text2c.sh -> defconfig.h, printed
+by `conky -C`). It did not set own_window_color, so the window
+background fell back to the compiled-in default of black.
+
+Set it to an opaque gray (#808080) so the default appearance is lighter.
+---
+ data/conky.conf | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/conky.conf b/data/conky.conf
+index ed269e96..cd8dba29 100644
+--- a/data/conky.conf
++++ b/data/conky.conf
+@@ -42,6 +42,7 @@ conky.config = {
+     out_to_x = true,
+     own_window = true,
+     own_window_class = 'Conky',
++    own_window_color = '#808080',
+     own_window_type = 'normal',
+     own_window_hints = 'undecorated,sticky,below,skip_taskbar,skip_pager',
+     show_graph_range = false,
+-- 
+2.55.0
+
